@@ -3,7 +3,12 @@
 bmApp.controller('BookDetailsCtrl',
 function ($scope, $location, $routeParams, BookDataService) {
     var isbn = $routeParams.isbn;
-    $scope.book = BookDataService.getBookByIsbn(isbn);
+
+    BookDataService.getBookByIsbn(isbn).then(function(res) {
+        $scope.book = res.data;
+    }, function(error) {
+        console.log('An error occurred!', error);
+    });
 
     $scope.goToListView = function() {
         if ($location.path().indexOf('/admin') === 0) {

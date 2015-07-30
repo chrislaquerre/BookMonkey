@@ -5,5 +5,9 @@ bmApp.controller('BookListCtrl', function ($scope, BookDataService) {
         return book.title;
     };
 
-    $scope.books = BookDataService.getBooks();
+    BookDataService.getBooks().then(function(res) {
+        $scope.books = res.data;
+    }, function(error) {
+        console.log('An error occurred!', error);
+    });
 });

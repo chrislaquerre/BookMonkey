@@ -5,11 +5,18 @@ bmApp.controller('AdminEditBookCtrl', function ($scope, $routeParams, $location,
     $scope.submitBtnLabel = 'Edit book';
 
     var isbn = $routeParams.isbn;
-    $scope.book = BookDataService.getBookByIsbn(isbn);
+    BookDataService.getBookByIsbn(isbn).then(function(res) {
+        $scope.book = res.data;
+    }, function(error) {
+        console.log('An error occurred!', error);
+    });
 
     $scope.submitAction = function() {
-        BookDataService.updateBook($scope.book);
-        goToAdminListView();
+        BookDataService.updateBook($scope.book).then(function() {
+            goToAdminListView();
+        }, function(error) {
+            console.log('An error occurred!', error);
+        });
     };
 
     $scope.cancelAction = function() {

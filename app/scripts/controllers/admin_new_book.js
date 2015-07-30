@@ -5,8 +5,11 @@ bmApp.controller('AdminNewBookCtrl', function ($scope, $location, BookDataServic
     $scope.submitBtnLabel = 'Create book';
 
     $scope.submitAction = function() {
-        BookDataService.storeBook($scope.book);
-        goToAdminListView();
+        BookDataService.storeBook($scope.book).then(function() {
+            goToAdminListView();
+        }, function(error) {
+            console.log('An error occurred!', error);
+        });
     };
 
     $scope.cancelAction = function() {
